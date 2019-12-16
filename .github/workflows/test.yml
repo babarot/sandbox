@@ -13,6 +13,8 @@ jobs:
 
     - name: Test
       uses: b4b4r07/github-search-templater@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
       with:
         template: |
           ## Active repositories
