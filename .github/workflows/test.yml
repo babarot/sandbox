@@ -31,6 +31,6 @@ jobs:
         filepath: 'README.md'
         author: 'b4b4r07'
         email: 'b4b4r07@gmail.com'
-        prbody: '## what\n## why\n hoge'
+        prbody: '## what\n## why\nhoge'
 
         # filepath: 'docs/microservices-platform/references/github-repositories-we-maintain.md'
