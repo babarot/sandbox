@@ -29,7 +29,7 @@ jobs:
         query: 'topic:bash user:b4b4r07'
         repo: 'b4b4r07/github-search-templater'
         filepath: 'README.md'
-        pr_sender: 'b4b4r07'
-        pr_body: '## test\n## why'
+        author: 'b4b4r07'
+        prbody: '## test\n## why'
 
         # filepath: 'docs/microservices-platform/references/github-repositories-we-maintain.md'
