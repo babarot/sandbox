@@ -27,3 +27,6 @@ jobs:
           {{ .URL }}
           {{ end }}
         query: 'topic:bash user:b4b4r07'
+        repo: 'b4b4r07/github-search-templater'
+        filepath: 'README.md'
+        # filepath: 'docs/microservices-platform/references/github-repositories-we-maintain.md'
