@@ -30,6 +30,6 @@ jobs:
         repo: 'b4b4r07/github-search-templater'
         filepath: 'README.md'
         pr_sender: b4b4r07
-        pr_body: no
+        pr_body: 'test'
 
         # filepath: 'docs/microservices-platform/references/github-repositories-we-maintain.md'
