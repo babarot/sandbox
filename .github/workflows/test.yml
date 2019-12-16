@@ -15,6 +15,6 @@ jobs:
       uses: b4b4r07/github-search-templater@master
       with:
         template: |
-          hoge hoge
-          hoge hoge
-          hoge hoge
+          Hoge hoge
+          Hoge hoge
+          Hoge hoge
