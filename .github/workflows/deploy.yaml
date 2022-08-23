@@ -26,7 +26,8 @@ jobs:
       - name: Check input site type
         if: |
           github.event_name == 'workflow_dispatch' &&
-          !contains(fromJson('["foo", "bar"]'), inputs.site_type)
+          !contains(inputs.site_type, 'foo') &&
+          !contains(inputs.site_type, 'bar')
         run: echo "${{ inputs.site_type }} is invalid site type" && exit 1
       - name: Check workflow status
         if: |
