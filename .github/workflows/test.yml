@@ -1,4 +1,4 @@
-name: 
+name: Review
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 on:
@@ -22,6 +22,7 @@ jobs:
 
       - name: Create a review
         uses: b4b4r07/action-github-review@main
+        if: github.event.label.name == 'hotfix'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
