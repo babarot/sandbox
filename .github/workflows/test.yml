@@ -21,7 +21,7 @@ jobs:
         run: echo "::set-output name=number::$(echo $GITHUB_REF | sed -e 's/[^0-9]//g')"
 
       - name: Create a review
-        uses: b4b4r07/action-github-review@master
+        uses: b4b4r07/action-github-review@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
