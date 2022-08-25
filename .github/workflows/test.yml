@@ -3,25 +3,29 @@ name:
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 on:
   pull_request:
-  - labeled
-  - unlabeled
+    types:
+      - labeled
+      - unlabeled
 
 jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
-    - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-    - name: Get pull request number
-      id: pr
-      run: echo "::set-output name=number::$(echo $GITHUB_REF | sed -e 's/[^0-9]//g')"
+      - name: Get pull request number
+        id: pr
+        run: echo "::set-output name=number::$(echo $GITHUB_REF | sed -e 's/[^0-9]//g')"
 
-    - name: Create a review
-      uses: b4b4r07/action-github-review@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      with:
-        owner: b4b4r07
-        repo: sandbox
-        number: ${{ steps.pr.outputs.number }}
-        event: APPROVE
+      - name: Create a review
+        uses: b4b4r07/action-github-review@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          owner: b4b4r07
+          repo: sandbox
+          number: ${{ steps.pr.outputs.number }}
+          event: APPROVE
