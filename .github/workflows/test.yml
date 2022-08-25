@@ -1,9 +1,10 @@
-name: Test
+name: 
 
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
 on:
-  push:
-    branches:
-    - master
+  pull_request:
+  - labeled
+  - unlabeled
 
 jobs:
   build:
@@ -11,26 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Test
-      uses: b4b4r07/github-search-templater@master
+    - name: Get pull request number
+      id: pr
+      run: echo "::set-output name=number::$(echo $GITHUB_REF | sed -e 's/[^0-9]//g')"
+
+    - name: Create a review
+      uses: b4b4r07/action-github-review@master
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        template: |
-          ## Active repositories
-          
-          {{ range . }}
-          ### {{ .Name }}
-          
-          {{ .Description }}
-          
-          {{ .URL }}
-          {{ end }}
-        query: 'topic:bash user:b4b4r07'
-        repo: 'b4b4r07/github-search-templater'
-        filepath: 'README.md'
-        author: 'b4b4r07'
-        email: 'b4b4r07@gmail.com'
-        prbody: '## what\n## why\nhoge'
-
-        # filepath: 'docs/microservices-platform/references/github-repositories-we-maintain.md'
+        owner: b4b4r07
+        repo: sandbox
+        number: ${{ steps.pr.outputs.number }}
+        event: APPROVE
