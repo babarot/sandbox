@@ -11,7 +11,7 @@ jobs:
         uses: peter-evans/slash-command-dispatch@v3
         id: scd
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT }}
           commands: |
             unlock
           issue-type: issue
