@@ -2,7 +2,7 @@ name: Unlock
 on:
   repository_dispatch:
     types:
-    - run-command
+    - unlock-command
 
 jobs:
   run:
