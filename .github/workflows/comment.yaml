@@ -1,4 +1,7 @@
-on: issue_comment
+name: unlock
+on:
+  issue_comment:
+    types: [created, updated]
 
 jobs:
   pr_commented:
@@ -24,13 +27,10 @@ jobs:
           const comment = comments.find(comment => {
             return comment.body.includes('/unlock')
           })
-          if (comment) {
-            console.log(comment)
-          } else {
-            # github.rest.issues.createComment({
-            #   issue_number: context.issue.number,
-            #   owner: context.repo.owner,
-            #   repo: context.repo.repo,
-            #   body: output
-            # })
-          }
+          console.log(comment)
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment,
+          })
