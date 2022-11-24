@@ -1,16 +1,14 @@
-on: issue_comment
+name: unlock
+on:
+  issue_comment:
+    types: [created, updated]
 
 jobs:
   pr_commented:
-    # This job only runs for pull request comments
-    name: PR comment
-    if: ${{ github.event.issue.pull_request }}
+    name: Comment
+    # if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo A comment on PR $NUMBER
-      env:
-        NUMBER: ${{ github.event.issue.number }}
     - name: Run
       uses: actions/github-script@v6
       with:
@@ -24,13 +22,9 @@ jobs:
           const comment = comments.find(comment => {
             return comment.body.includes('/unlock')
           })
-          if (comment) {
-            console.log(comment)
-          } else {
-            # github.rest.issues.createComment({
-            #   issue_number: context.issue.number,
-            #   owner: context.repo.owner,
-            #   repo: context.repo.repo,
-            #   body: output
-            # })
-          }
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment,
+          })
