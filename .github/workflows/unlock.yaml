@@ -1,0 +1,19 @@
+name: Unlock
+on:
+  repository_dispatch:
+    types:
+    - run-command
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Run unlock
+        env:
+          DIR: ${{ github.event.client_payload.slash_command.args.named.dir }}
+        shell: bash
+        run: |
+          echo $DIR
