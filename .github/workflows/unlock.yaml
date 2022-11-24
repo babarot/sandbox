@@ -23,8 +23,7 @@ jobs:
           repository: ${{ github.event.client_payload.github.payload.repository.full_name }}
           issue-number: ${{ github.event.client_payload.github.payload.issue.number }}
           body: |
-            [Command run output][1]
-            [1]: ${{ steps.vars.outputs.run-url }}
+            [Command run output](${{ steps.vars.outputs.run-url }})
 
       - name: Dump the client payload context
         env:
@@ -36,4 +35,4 @@ jobs:
           DIR: ${{ github.event.client_payload.slash_command.args.named.dir }}
         shell: bash
         run: |
-          echo $DIR
+          echo "dir: $DIR"
