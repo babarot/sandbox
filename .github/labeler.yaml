@@ -1,0 +1,3 @@
+missing/fish:
+- any: ['src/*']
+  all: ['!functions/*.fish']
