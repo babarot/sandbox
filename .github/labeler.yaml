@@ -1,3 +1,6 @@
+missing/bash:
+- any: ['functions/*.fish']
+  all: ['!src/*']
 missing/fish:
 - any: ['src/*']
   all: ['!functions/*.fish']
