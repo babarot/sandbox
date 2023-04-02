@@ -3,7 +3,7 @@
   color: feca57
 - name: lifecycle/rotten
   description: >- # join lines with spaces (>) and remove last newline (-)
-    Labeled by GitHub actions after 30 days of having 'lifecycle/stale' label. Issues and PRs with this label will close after another 30 days of inactivity.
+    Labeled by GitHub actions after 30 days of having lifecycle/stale label. Issues and PRs with this label will close after another 30 days of inactivity.
   color: feca57
 - name: lifecycle/frozen
   description: Prevents GitHub actions from labeling Issues and PRs with 'lifecycle/stale' or 'lifecycle/rotten'.
