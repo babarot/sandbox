@@ -81,14 +81,16 @@ jobs:
       shell: pwsh
       run: |
         cd D:\a\sandbox\sandbox\testfiles
-        "test" | Out-File -FilePath file1.txt
-        "test" | Out-File -FilePath file2.txt
-        "test" | Out-File -FilePath file3.txt
+        "test" | Out-File -FilePath file1.log
+        "test" | Out-File -FilePath file2.log
+        "test" | Out-File -FilePath file3.log
         "test" | Out-File -FilePath testa.txt
         "test" | Out-File -FilePath testb.txt
         "test" | Out-File -FilePath testc.txt
-        "test" | Out-File -FilePath test.dat
-        "test" | Out-File -FilePath test.log
+        "test" | Out-File -FilePath log1.data
+        "test" | Out-File -FilePath log2.data
+        "test" | Out-File -FilePath log3.data
+        "test" | Out-File -FilePath log.dat
         Write-Host "`nTest directory contents:"
         Get-ChildItem
 
@@ -104,14 +106,14 @@ jobs:
         Write-Host "`nDirectory contents after *.txt:"
         Get-ChildItem
 
-        Write-Host "`nTesting with pattern: test[!0-9].txt"
-        .\app.exe test[!0-9].txt
-        Write-Host "`nDirectory contents after test[!0-9].txt:"
+        Write-Host "`nTesting with pattern: file[!0-9].log"
+        .\app.exe file[!0-9].log
+        Write-Host "`nDirectory contents after file[!0-9].log:"
         Get-ChildItem
 
-        Write-Host "`nTesting with pattern: file?.txt"
-        .\app.exe file?.txt
-        Write-Host "`nDirectory contents after file?.txt:"
+        Write-Host "`nTesting with pattern: log?.data"
+        .\app.exe log?.data
+        Write-Host "`nDirectory contents after log?.data:"
         Get-ChildItem
 
         Write-Host "`nContents of .gomi directory:"
