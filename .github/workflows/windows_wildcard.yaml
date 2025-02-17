@@ -39,7 +39,7 @@ jobs:
         git branch --show-current
 
         # Switch to the correct branch
-        git checkout babarot/windows-wildcard
+        git checkout babarot/windows-wildcard-2
         Write-Host "`nCurrent branch after switch:"
         git branch --show-current
 
