@@ -31,23 +31,48 @@ jobs:
     - name: Git clone and build
       shell: pwsh
       run: |
-        # Clone and build in a temporary location
+        # Clone
         git clone https://github.com/babarot/gomi.git "$env:USERPROFILE\gomi_temp"
         cd "$env:USERPROFILE\gomi_temp"
 
         Write-Host "`nCurrent branch before switch:"
         git branch --show-current
 
+        # Switch to the correct branch
         git checkout babarot/windows-wildcard
         Write-Host "`nCurrent branch after switch:"
         git branch --show-current
 
-        # Move back to workspace and create test directory
-        cd D:\a\sandbox\sandbox
-        New-Item -ItemType Directory -Force -Path testfiles
+        # Show source files
+        Write-Host "`nSource files in current directory:"
+        Get-ChildItem
 
-        # Move executable to test directory
-        Move-Item "$env:USERPROFILE\gomi_temp\app.exe" "testfiles\app.exe"
+        # Show go.mod content
+        Write-Host "`nContents of go.mod:"
+        if (Test-Path go.mod) {
+            Get-Content go.mod
+        } else {
+            Write-Host "go.mod not found"
+        }
+
+        # Try to build with verbose output
+        Write-Host "`nAttempting to build..."
+        go mod tidy
+        go build -v -o app.exe
+
+        # Check if build was successful
+        if (Test-Path app.exe) {
+            Write-Host "`nBuild successful, app.exe created"
+            # Move back to workspace and create test directory
+            cd D:\a\sandbox\sandbox
+            New-Item -ItemType Directory -Force -Path testfiles
+
+            # Move executable to test directory
+            Move-Item "$env:USERPROFILE\gomi_temp\app.exe" "testfiles\app.exe"
+        } else {
+            Write-Host "`nBuild failed, app.exe not created"
+            exit 1
+        }
 
         # Clean up temporary directory
         Remove-Item -Recurse -Force "$env:USERPROFILE\gomi_temp"
