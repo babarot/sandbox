@@ -87,8 +87,8 @@ jobs:
             Write-Host ".gomi directory does not exist"
         }
 
-    - name: Upload test files as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: gomi
-        path: babarot/gomi/*
+    # - name: Upload test files as artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: gomi
+    #     path: babarot/gomi/*
