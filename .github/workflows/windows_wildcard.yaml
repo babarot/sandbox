@@ -1,0 +1,94 @@
+name: Windows Wildcard Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  test-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Show environment info
+      shell: pwsh
+      run: |
+        Write-Host "User Directory: $env:USERPROFILE"
+        Write-Host "Home Directory: $env:HOMEDRIVE$env:HOMEPATH"
+        Write-Host "Current Directory: $PWD"
+        Write-Host "`nDirectory contents of User Directory:"
+        Get-ChildItem $env:USERPROFILE
+        Write-Host "`nWorking directory contents:"
+        Get-ChildItem
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.23'
+
+    - name: Git clone
+      shell: pwsh
+      run: |
+        git clone https://github.com/babarot/gomi.git
+        cd gomi
+
+    - name: Create test files
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Force -Path testfiles
+        Set-Location testfiles
+        "test" | Out-File -FilePath file1.txt
+        "test" | Out-File -FilePath file2.txt
+        "test" | Out-File -FilePath file3.txt
+        "test" | Out-File -FilePath testa.txt
+        "test" | Out-File -FilePath testb.txt
+        "test" | Out-File -FilePath testc.txt
+        "test" | Out-File -FilePath test.dat
+        "test" | Out-File -FilePath test.log
+        Get-ChildItem
+        Set-Location ..
+
+    - name: Build
+      run: |
+        cd gomi
+        go build -o app.exe
+
+    - name: Test wildcards
+      shell: pwsh
+      run: |
+        cd gomi
+        Write-Host "`nTesting with pattern: testfiles/*.txt"
+        ./app.exe testfiles/*.txt
+        Write-Host "`nCurrent directory contents after *.txt:"
+        Get-ChildItem
+        Write-Host "`nTestfiles directory contents:"
+        Get-ChildItem testfiles
+
+        Write-Host "`nTesting with pattern: testfiles/test[!0-9].txt"
+        ./app.exe testfiles/test[!0-9].txt
+        Write-Host "`nCurrent directory contents after test[!0-9].txt:"
+        Get-ChildItem
+        Write-Host "`nTestfiles directory contents:"
+        Get-ChildItem testfiles
+
+        Write-Host "`nTesting with pattern: testfiles/file?.txt"
+        ./app.exe testfiles/file?.txt
+        Write-Host "`nCurrent directory contents after file?.txt:"
+        Get-ChildItem
+        Write-Host "`nTestfiles directory contents:"
+        Get-ChildItem testfiles
+
+        Write-Host "`nContents of .gomi directory:"
+        if (Test-Path "$env:USERPROFILE\.gomi") {
+            Get-ChildItem "$env:USERPROFILE\.gomi" -Force
+        } else {
+            Write-Host ".gomi directory does not exist"
+        }
+
+    - name: Upload test files as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: gomi
+        path: babarot/gomi/*
