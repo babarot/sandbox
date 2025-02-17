@@ -34,10 +34,13 @@ jobs:
         # Clone and build in a temporary location
         git clone https://github.com/babarot/gomi.git "$env:USERPROFILE\gomi_temp"
         cd "$env:USERPROFILE\gomi_temp"
+
+        Write-Host "`nCurrent branch before switch:"
         git branch --show-current
-        git checkout windows-wildcard
+
+        git checkout babarot/windows-wildcard
+        Write-Host "`nCurrent branch after switch:"
         git branch --show-current
-        go build -o app.exe
 
         # Move back to workspace and create test directory
         cd D:\a\sandbox\sandbox
