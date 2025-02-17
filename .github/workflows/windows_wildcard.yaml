@@ -34,7 +34,9 @@ jobs:
         # Clone and build in a temporary location
         git clone https://github.com/babarot/gomi.git "$env:USERPROFILE\gomi_temp"
         cd "$env:USERPROFILE\gomi_temp"
-        git checkout -b windows-wildcard babarot/windows-wildcard
+        git branch --show-current
+        git checkout windows-wildcard
+        git branch --show-current
         go build -o app.exe
 
         # Move back to workspace and create test directory
